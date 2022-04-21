@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+}
+
+.clearfix::after {
+  display: table;
+  clear: both;
+  content: '';
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.chess {
+  width: 600px;
+  border: 2px solid black;
+}
+
+.white,
+.black {
+  float: left;
+  width: 75px;
+  padding-bottom: 75px;
+}
+
+.white {
+  background-color: #fff;
+}
+
+.black {
+  background-color: #000;
+}
