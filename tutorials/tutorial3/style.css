@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container form {
+  width: 30%;
+  margin-top: 50px;
+  padding: 50px 30px;
+  border: 1px solid rgb(50, 154, 199);
+  border-radius: 5px;
+}
+
+.container form label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 20px;
+  text-align: left;
+}
+
+.container form input {
+  width: 100%;
+  height: 5vh;
+  margin-top: 40px;
+  padding: 10px;
+  border: 1px solid rgb(50, 154, 199);
+  color: rgb(50, 154, 199);
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.container form button {
+  margin-top: 20px;
+  padding: 5px 10px;
+
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.container form button:hover {
+  border: 1px solid rgb(50, 154, 199);
+  background-color: rgb(50, 154, 199);
+  color: #fff;
+}
+
+.resultContainer {
+  margin-top: 30px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 30px;
+}
+
+.resultContainer span {
+  color: rgb(12, 137, 233);
+}
