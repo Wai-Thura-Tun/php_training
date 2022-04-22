@@ -10,6 +10,8 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name'])
         $_SESSION['status'] = "Successfully Login as" . " " . $name;
         header("location:home.php");
     } else {
-        header("location:index.php");
+
+        echo '<script>alert("Sorry, Your email or password is wrong"); window.location.href="index.php";</script>';
+
     }
 }
