@@ -27,7 +27,6 @@
 <script>
     $('.imgInput').on('change', function(e) {
         let image = e.target.files[0];
-        console.log(image);
         let imgUrl = URL.createObjectURL(image);
         $('.imgCon').attr("src", imgUrl);
     })

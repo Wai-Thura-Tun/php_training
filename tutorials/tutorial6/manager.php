@@ -7,10 +7,16 @@ if (isset($_POST)) {
     $fileDir = "" . $fdName . "/" . basename($img);
     function checkDirAndUp($fdName, $img, $fileDir)
     {
+        $tmpImg = $_FILES['image']['tmp_name'];
         if (file_exists($fileDir)) {
-            echo '<script>alert("Your image is already exists in the name of folder you typed."); window.location.href="index.php";</script>';
-        } else {
-            $tmpImg = $_FILES['image']['tmp_name'];
+            $finalImg = rand(0,10).$img;
+            $upload = move_uploaded_file($tmpImg, $fdName . "/" . $finalImg);
+            if ($upload) {
+                echo '<script>alert("Successfully uploaded, Notice:The filename is replaced because there is same files with your filename.");window.location.href="index.php";</script>';
+            } else {
+                echo '<script>alert("Sorry, uploading failed! Try again");window.location.href="index.php";</script>';
+            }
+        } else { 
             $upload = move_uploaded_file($tmpImg, $fdName . "/" . $img);
             if ($upload) {
                 echo '<script>alert("Congratulation, successfully uploaded");window.location.href="index.php";</script>';
