@@ -12,7 +12,7 @@
             <div class="ttl">
                 Type Text or Link and Generate QRcode
             </div>
-            <input type="text" placeholder="Enter text" name="text">
+            <input type="text" placeholder="Enter text" name="text" required>
             <button>Generate</button>
         </form>
     </div>
