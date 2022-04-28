@@ -37,8 +37,8 @@ include 'dbmanage/db.php';
             </form>
         <?php } ?>
         <?php
-        $query = $conn->query("SELECT * FROM mytable");
-        if ($query->num_rows != 0) { ?>
+        $query = $conn->query("SELECT * FROM mytable WHERE deleted_date IS NULL");
+        if ($query->num_rows > 0) { ?>
             <table>
                 <thead>
                     <th>No.</th>
@@ -46,11 +46,6 @@ include 'dbmanage/db.php';
                     <th>Email</th>
                     <th>Created Date</th>
                     <th>Modified Date</th>
-                    <?php
-                    $checkDDate = $conn->query("SELECT * FROM mytable WHERE deleted_date IS NOT NULL");
-                    if ($checkDDate->num_rows > 0) { ?>
-                        <th>Deleted Date</th>
-                    <?php } ?>
                     <th>Edit</th>
                     <th>Delete</th>
                 </thead>
@@ -63,14 +58,6 @@ include 'dbmanage/db.php';
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['created_date']; ?></td>
                             <td><?php echo $row['modified_date']; ?></td>
-                            <?php
-                            if ($checkDDate->num_rows > 0) {
-                                if (!$row['deleted_date']) { ?>
-                                    <td class="ndyttl"><?php echo "Not Delete Yet"; ?></td>
-                                <?php } else { ?>
-                                    <td><?php echo $row['deleted_date']; ?></td>
-                                <?php } ?>
-                            <?php } ?>
                             <td><a class="editbtn" href="index.php?eid=<?php echo $row['id']; ?>"><i class="fa-solid fa-pen"></i></a></td>
                             <td><a class="deletebtn" href="dbmanage/delete.php?did=<?php echo $row['id']; ?>"><i class="fa-solid fa-circle-minus"></i></a></td>
                         </tr>
