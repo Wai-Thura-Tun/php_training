@@ -73,3 +73,14 @@ td {
   text-decoration: none;
 
 }
+
+.ndttl {
+  margin-top: 40px;
+  font-size: 30px;
+
+}
+
+.ndyttl,
+.ndttl {
+  color: #d3d3d3;
+}
