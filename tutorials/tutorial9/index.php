@@ -27,7 +27,7 @@ require 'dbmanage/deleteuser.php';
         const xDData = <?php echo json_encode($xDData); ?>;
         const yDData = <?php echo json_encode($yDData); ?>;
     </script>
-    <script src="common.js"></script>
+    <script src="js/common.js"></script>
 </body>
 
 </html>
