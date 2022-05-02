@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container form input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border: 1px solid #d3d3d3;
+  font-size: 15px;
+  text-indent: 10px;
+  border-radius: 5px;
+}
+
+.container form {
+  width: 20%;
+  margin-top: 40px;
+}
+
+.container form button {
+  padding: 10px 20px;
+  border: 1px solid #d3d3d3;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.container .login {
+  width: 30%;
+  padding: 30px 50px;
+  border: 1px solid #d3d3d3;
+  border-radius: 10px;
+}
+
+.resetBtn {
+  margin-top: 20px;
+  color: #000;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.resetBtn:hover {
+  text-decoration: underline;
+}
+
+.logout {
+  margin-top: 30px;
+  padding: 5px 10px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.status {
+  margin-top: 70px;
+  color: rgb(113, 243, 163);
+  font-size: 30px;
+  text-align: center;
+}
