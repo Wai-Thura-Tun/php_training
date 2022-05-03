@@ -4,9 +4,36 @@ session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-//Load Composer's autoloader
+
 require '../vendor/autoload.php';
 require 'db.php';
+$mailUserName = '5787221bdeb471';
+$mailPasword = '7b2b825ab4494c';
+$mailHost = 'smtp.mailtrap.io';
+$mailAuth = true;
+$mailPort = 2525;
+$mailSecure = "tls";
+$mailFrom = "testbot907@gmail.com";
+/**
+ * @var mixed $serverHost
+ */
+$serverHost = '';
+/**
+ * @var mixed $httpType
+ */
+$httpType = '';
+/**
+ * @var mixed $resetOTP
+ */
+$resetOTP = 0;
+/**
+ * @var mixed $rpID
+ */
+$resetID = 0;
+/**
+ * @var mixed $mailBody
+ */
+$mailBody = '';
 if (isset($_POST['remail'])) {
     $reMail = mysqli_escape_string($conn, $_POST['remail']);
     $query = $conn->query("SELECT * FROM users WHERE email='$reMail'");
@@ -17,19 +44,28 @@ if (isset($_POST['remail'])) {
         $_SESSION['resetotp'] = $randOTP;
         if (isset($_SESSION['resetotp'])) {
             $resetOTP = $_SESSION['resetotp'];
+            if (isset($_SERVER['HTTPS_HOST'])) {
+                $serverHost = $_SERVER['HTTPS_HOST'];
+                $httpType = "https";
+                $mailBody = "" . $httpType . "://" . $serverHost . "/change.php?rpotp=$resetOTP&rpid=$resetID";
+            } else {
+                $serverHost = $_SERVER['HTTP_HOST'];
+                $httpType = "http";
+                $mailBody = "" . $httpType . "://" . $serverHost . "/change.php?rpotp=$resetOTP&rpid=$resetID";
+            }
             $phpmailer = new PHPMailer();
             $phpmailer->isSMTP();
-            $phpmailer->Host = 'smtp.mailtrap.io';
-            $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = 2525;
-            $phpmailer->Username = '5787221bdeb471';
-            $phpmailer->Password = '7b2b825ab4494c';
-            $phpmailer->SMTPSecure = "tls";
+            $phpmailer->Host = $mailHost;
+            $phpmailer->SMTPAuth = $mailAuth;
+            $phpmailer->Port = $mailPort;
+            $phpmailer->Username = $mailUserName;
+            $phpmailer->Password = $mailPasword;
+            $phpmailer->SMTPSecure = $mailSecure;
             $phpmailer->isHTML(true);
-            $phpmailer->setFrom("testbot907@gmail.com");
+            $phpmailer->setFrom($mailFrom);
             $phpmailer->addAddress($reMail);
             $phpmailer->Subject = "Reset Password";
-            $phpmailer->Body = "<h3>You can change your password by clicking button below<br><a href='http://localhost:8000/change.php?rpotp=$resetOTP&rpid=$resetID'>Reset your password.</a></h3>";
+            $phpmailer->Body = "<h3>You can change your password by clicking button below<br><a href=$mailBody>Reset your password.</a></h3>";
             if ($phpmailer->send()) {
                 if ($conn->query("UPDATE users SET reseted_date=now() WHERE id='$resetID'")) {
                     header("location:../status.php");
