@@ -7,25 +7,48 @@ use App\TaskList;
 
 class TaskListController extends Controller
 {
+    /**
+     * Summary of index
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $data = TaskList::all();
         return view('index', ['data' => $data]);
     }
+    /**
+     * Summary of insert
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function insert(Request $request)
     {
+        $validData = $request->validate([
+            'title' => 'required',
+            'detail' => 'required'
+        ]);
         $taskList = new TaskList();
-        $taskList->title = $request->title;
-        $taskList->task = $request->detail;
+        $taskList->title = $validData['title'];
+        $taskList->task = $validData['detail'];
         $taskList->save();
-        return redirect('/');
+        return back();
     }
+    /**
+     * Summary of edit
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $edata = TaskList::find($id);
         $data = TaskList::all();
         return view('index', ['editTask' => $edata, 'data' => $data]);
     }
+    /**
+     * Summary of update
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(Request $request)
     {
         $uData = TaskList::find($request->uid);
@@ -35,7 +58,12 @@ class TaskListController extends Controller
         $uData->save();
         return redirect('/');
     }
-    public function destroy($id)
+    /**
+     * Summary of delete
+     * @param mixed $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function delete($id)
     {
         $dData = TaskList::find($id);
         $dData->delete();

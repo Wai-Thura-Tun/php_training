@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaskListsTable extends Migration
+class AddDeletedAtColumnToTaskList extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTaskListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('task_lists', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('task');
-            $table->timestamps();
+        Schema::table('task_lists', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
     /**
@@ -27,6 +24,8 @@ class CreateTaskListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_lists');
+        Schema::table('task_lists', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

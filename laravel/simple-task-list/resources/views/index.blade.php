@@ -8,24 +8,27 @@
   </head>
   <body>
     <div class="container">
-      @if (isset($existTask))
-        <div class="exist">Your Title is already exist.</div>
-      @endif
       @if (isset($editTask)) 
       <form method="POST" action="/update-task">
         @csrf
         <label>Edit Task</label>
-        <input type="hidden" name="uid" value="{{ $editTask->id }}" required>
-        <input type="text" placeholder="Title" name="utitle" value="{{ $editTask->title }}" required>
-        <input type="text" placeholder="Description" name="udetail" value="{{ $editTask->task }}" required>
+        <input type="hidden" name="uid" value="{{ $editTask->id }}">
+        <input type="text" placeholder="Title" name="utitle" value="{{ $editTask->title }}">
+        <input type="text" placeholder="Description" name="udetail" value="{{ $editTask->task }}">
         <button>Update</button>
       </form>
       @else
       <form method="POST" action="/add-task">
         @csrf
         <label>Add List</label>
-        <input type="text" placeholder="Title" name="title" required>
-        <input type="text" placeholder="Description" name="detail" required>
+        <input type="text" placeholder="Title" name="title">
+        @error('title')
+        <span class="errorcon">{{ $message }}</span>          
+        @enderror
+        <input type="text" placeholder="Description" name="detail">
+        @error('detail')
+          <span class="errorcon">{{ $message }}</span>
+        @enderror
         <button>Add</button>
       </form>
       @endif

@@ -100,4 +100,11 @@
   margin-top: 20px;
 }
 
+.errorcon {
+  font-size: 15px;
+  display: block;
+  color: #ff0000;
+  margin-bottom: 20px;
+}
+
 

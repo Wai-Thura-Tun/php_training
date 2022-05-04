@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TaskListController::class, 'index']);
 Route::get('/edit-task/{id}', [TaskListController::class, 'edit']);
-Route::get('/delete-task/{id}', [TaskListController::class, 'destroy']);
+Route::get('/delete-task/{id}', [TaskListController::class, 'delete']);
 Route::post('/update-task', [TaskListController::class, 'update']);
 Route::post('/add-task', [TaskListController::class , 'insert']);
