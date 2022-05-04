@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container form{
+  margin-top: 50px;
+  width: 25%;
+}
+
+.container form label {
+  display:block;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.container form input {
+  border: 1px solid #000;
+  border-radius: 5px;
+  height: 40px;
+  width: 100%;
+  font-size: 16px;
+  text-indent: 10px;
+  margin-bottom: 20px;
+}
+
+.container form button {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #000;
+  transition: all .5s ease-in-out;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.container form button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.listCon {
+  margin-top: 50px;
+  display: flex;
+  justify-content:space-evenly;
+  flex-wrap: wrap;
+}
+
+.listItem .info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.exist {
+  display: none;
+}
+
+.listItem {
+  width: 300px;
+  margin: 0px 30px 50px 30px;
+  padding: 20px;
+  color: #000;
+  background-color:yellow;
+  border-radius: 10px;
+  box-shadow: 0px 10px 10px #000;
+}
+
+.listItem .delete {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.listItem .listttl {
+  font-size:20px;
+  margin-bottom: 20px;
+}
+
+.listItem .editBtn {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+  padding:10px 0px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+
