@@ -12,27 +12,33 @@ class TaskService implements TaskServiceInterface
      * Summary of 
      * @var mixed
      */
+
     private $taskDao;
+
     /**
      * Summary of __construct
      * @param TaskDaoInterface $taskDaoInterface
      */
+
     public function __construct(TaskDaoInterface $taskDaoInterface)
     {
         $this->taskDao = $taskDaoInterface;
     }
+
     /**
      * Save tasks from input to database
      * @param mixed $validated
-     * @return mixed
+     * @return Object saved Task
      */
+
     public function saveTask($validated)
     {
         return $this->taskDao->saveTask($validated);
     }
+
     /**
      * fetch all from database
-     * @return mixed
+     * @return Object Tasks Collection
      */
     public function getTaskAll()
     {
@@ -41,26 +47,30 @@ class TaskService implements TaskServiceInterface
     /**
      * fetch from table using id
      * @param mixed $id
-     * @return mixed
+     * @return Array task and all task 
      */
     public function getTaskByID($id)
     {
         return $this->taskDao->getTaskByID($id);
     }
+
     /**
      * save update data to databae
      * @param mixed $validated
-     * @return mixed
+     * @return Object updated task
      */
-    public function updateTaskByID($validated)
+
+    public function updateTaskByID($validated,$id)
     {
-        return $this->taskDao->updateTaskByID($validated);
+        return $this->taskDao->updateTaskByID($validated,$id);
     }
+
     /**
      * delete exact task
      * @param mixed $id
-     * @return mixed
+     * @return $message true or false
      */
+    
     public function deleteTaskByID($id)
     {
         return $this->taskDao->deleteTaskByID($id);

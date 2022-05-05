@@ -8,40 +8,28 @@
   </head>
   <body>
     <div class="container">
-      @if (isset($editTask)) 
-      <form method="POST" action="/update-task">
+      <form method="POST" action="@if(isset($editTask)) {{ route('taskupdate',['id' => $editTask->id ]) }} @else {{ route('taskadd') }} @endif">
         @csrf
-        <label>Edit Task</label>
-        <input type="hidden" name="uid" value="{{ $editTask->id }}">
-        <input type="text" placeholder="Title" name="utitle" value="{{ $editTask->title }}">
-        <input type="text" placeholder="Description" name="udetail" value="{{ $editTask->detail }}">
-        <button>Update</button>
-      </form>
-      @else
-      <form method="POST" action="/add-task">
-        @csrf
-        <label>Add List</label>
-        <input type="text" placeholder="Title" name="title">
+        <label>@if(isset($editTask)) Edit List @else Add List @endif</label>
+        <input type="text" placeholder="Title" name="title" value="{{ $editTask->title ?? ''}}">
         @error('title')
         <span class="errorcon">{{ $message }}</span>          
         @enderror
-        <input type="text" placeholder="Description" name="detail">
+        <input type="text" placeholder="Description" name="detail" value="{{ $editTask->detail ?? ''}}">
         @error('detail')
-          <span class="errorcon">{{ $message }}</span>
+        <span class="errorcon">{{ $message }}</span>
         @enderror
-        <button>Add</button>
+        <button>@if(isset($editTask)) Update @else Add @endif</button>
       </form>
-      @endif
       <div class="listCon">
         @if (isset($taskList))
         @foreach ($taskList as $task)
         <div class="listItem">
          <div class="info">
            <div class="noinfo">
-             {{ $task->id }}
-             .
+             {{ $task->id }} .
            </div>
-           <a class="delete" href="/delete-task/{{ $task->id }}">
+           <a class="delete" href="{{ route('taskdelete',['id' => $task->id]) }}">
              <i class="fa fa-trash"></i>
            </a>
          </div>
@@ -51,7 +39,7 @@
        <div class="listdetail">
          {{ $task->detail }}
        </div>
-       <a class="editBtn" href="/edit-task/{{ $task->id }}">
+       <a class="editBtn" href="{{ route('taskedit',['id' => $task->id]) }}">
          Edit
        </a>
      </div>
@@ -59,11 +47,5 @@
         @endif    
       </div>
     </div>
-    <script>
-      $(document).ready(function(){
-        $('.exist').show().delay(1000).hide();
-        console.log($('.exist'))
-      })
-    </script>
   </body>
 </html>

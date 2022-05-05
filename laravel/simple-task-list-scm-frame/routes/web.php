@@ -15,7 +15,7 @@ use App\Task;
 */
 
 Route::get('/', [TaskController::class, 'showTaskList']);
-Route::post('/add-task', [TaskController::class, 'createTaskList']);
-Route::get('/edit-task/{id}', [TaskController::class, 'editTaskList']);
-Route::get('/delete-task/{id}', [TaskController::class, 'deleteTaskList']);
-Route::post('/update-task', [TaskController::class, 'updateTaskList']);
+Route::post('/add-task', [TaskController::class, 'createTaskList'])->name('taskadd');
+Route::get('/edit-task/{id}', [TaskController::class, 'editTaskList'])->name('taskedit');
+Route::get('/delete-task/{id}', [TaskController::class, 'deleteTaskList'])->name('taskdelete');
+Route::post('/update-task/{id}', [TaskController::class, 'updateTaskList'])->name('taskupdate');

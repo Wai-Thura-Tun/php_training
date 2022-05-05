@@ -28,7 +28,7 @@ interface TaskServiceInterface
      * @param mixed $validated
      * @return void
      */
-    public function updateTaskByID($validated);
+    public function updateTaskByID($validated,$id);
     /**
      * Summary of deleteTaskByID
      * @param mixed $id

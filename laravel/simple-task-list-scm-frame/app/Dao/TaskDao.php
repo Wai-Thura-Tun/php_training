@@ -12,8 +12,9 @@ class TaskDao implements TaskDaoInterface
     /**
      * Save tasks from input to database
      * @param Request $request
-     * @return Task
+     * @return Object saved task
      */
+
     public function saveTask($validated)
     {
         $task = new Task();
@@ -25,18 +26,21 @@ class TaskDao implements TaskDaoInterface
 
     /**
      * fetch all from database
-     * @return \Illuminate\Database\Eloquent\Collection|array<\Illuminate\Database\Eloquent\Model>
+     * @return Object Tasks Collection
      */
+
     public function getTaskAll()
     {
         $task = Task::all();
         return $task;
     }
+
     /**
      * fetch from table using id
      * @param mixed $id
-     * @return array
+     * @return Array task and all task 
      */
+
     public function getTaskByID($id)
     {
         $task = Task::find($id);
@@ -44,24 +48,27 @@ class TaskDao implements TaskDaoInterface
         $data = ['task' => $task, 'taskList' => $taskAll];
         return $data;
     }
+
     /**
      * save update data to databae
      * @param Request $request
-     * @return mixed
+     * @return Object updated task
      */
-    public function updateTaskByID($validated)
+
+    public function updateTaskByID($validated, $id)
     {
-        $currentTask = Task::find($validated['uid']);
-        $currentTask->title = $validated['utitle'];
-        $currentTask->detail = $validated['udetail'];
+        $currentTask = Task::find($id);
+        $currentTask->title = $validated['title'];
+        $currentTask->detail = $validated['detail'];
         $currentTask->updated_at = now();
         $currentTask->save();
         return $currentTask;
     }
+
     /**
      * delete exact task
      * @param mixed $id
-     * @return mixed
+     * @return $message true or false
      */
     public function deleteTaskByID($id)
     {
