@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 70%;
+}
+
+.container .elistcon {
+  display: flex;
+  position: fixed;
+  top: 0px;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #000;
+  color: #fff;
+}
+
+.elistcon .elttl {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.elistcon .eaddbtn {
+  padding: 5px 10px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  color: #000;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.container table {
+  width: 90%;
+  margin-top: 80px;
+  padding: 0px 10px;
+  border-collapse: collapse;
+}
+
+.container table th,
+td {
+  padding: 20px 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.container table .editbtn,
+.container table .deletebtn {
+  padding: 5px 10px;
+  border: 2px solid #000;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.container table .editbtn {
+  border-color: #ffa500;
+}
+
+.container table .deletebtn {
+  border-color: #ff0000;
+}
+
+.returncon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #000;
+  color: #fff;
+}
+
+.returncon a {
+  padding: 5px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.container form {
+  width: 30%;
+  margin-top: 40px;
+}
+
+.container form .inputCon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.container form .inputCon input,
+.container form .inputCon select {
+  width: 60%;
+  height: 35px;
+  border: 1px solid #d3d3d3;
+  text-indent: 10px;
+  border-radius: 5px;
+}
+
+.container form button {
+  display: block;
+  padding: 10px 40px;
+  border: 1px solid #d3d3d3;
+  background-color: rgb(32, 162, 95);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.container form .errorbtn {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: #ff0000;
+  text-align: right;
+}
+
+.nodata {
+  margin-top: 100px;
+  color: #d3d3d3;
+  font-size: 30px;
+  text-align: center;
+}
