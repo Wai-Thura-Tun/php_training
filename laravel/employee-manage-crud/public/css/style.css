@@ -32,7 +32,8 @@
   font-weight: bold;
 }
 
-.elistcon .eaddbtn {
+.elistcon .eaddbtn,
+.eexpbtn {
   padding: 5px 10px;
   border: 1px solid #fff;
   background-color: #fff;
@@ -40,6 +41,10 @@
   font-size: 15px;
   text-decoration: none;
   border-radius: 5px;
+}
+
+.eexpbtn {
+  margin-left: 20px;
 }
 
 .container table {
@@ -141,24 +146,55 @@ td {
   margin-top: 30px;
 }
 
-.pagi nav ul li{
-  display:inline-block;
-  margin:0px 2px;
+.pagi nav ul li {
+  display: inline-block;
+  margin: 0px 2px;
   padding: 5px;
+  border: 1px solid #000000;
+  text-align: center;
   border-radius: 5px;
-   border: 1px solid #000000;
-   text-align: center;
 }
 
 .pagi .page-item .page-link {
-  text-decoration: none;
   color: #000;
+  text-decoration: none;
 }
 
 .pagi .page-item.active .page-link {
   color: #fff;
 }
 
-.pagi .page-item.active{
-  background-color:#000;
+.pagi .page-item.active {
+  background-color: #000;
+}
+
+.container .importform {
+  width: 30%;
+}
+
+.container .importform input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.container .importform label {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.returnbtn {
+  width: 100%;
+}
+
+.returnbtn a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
 }

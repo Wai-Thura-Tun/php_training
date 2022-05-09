@@ -24,4 +24,11 @@ Route::get('/create-employee', function(){
     return view('input');
 })->name('create');
 Route::post('/create-employee',[EmployeeController::class,'addEmployeeList'])->name('add');
+Route::get('/import-employee', function(){
+    return view('file');
+})->name('import');
+Route::get('employees/export/', [EmployeeController::class, 'export'])->name('empexport');
+Route::post('employees/import/', [EmployeeController::class, 'import'])->name('empimport');
+
+
 

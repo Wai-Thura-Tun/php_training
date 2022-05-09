@@ -2,10 +2,14 @@
 
 namespace App\Dao;
 
+use Maatwebsite\Excel\Facades\Excel;
 use App\Model\EmployeeList;
 use App\Contracts\Dao\EmployeeDaoInterface;
+use App\Exports\EmployeeListExport;
 use App\Model\EmployeeSalary;
 use App\Http\Controllers\EmployeeController;
+use App\Imports\EmployeeListImport;
+use App\Imports\EmployeeSalaryImport;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeDao implements EmployeeDaoInterface
@@ -109,5 +113,28 @@ class EmployeeDao implements EmployeeDaoInterface
                 'updated_at' => now()
             ));
         return [$emplyList, $emplySalary];
+    }
+
+    /**
+     * Summary of exportEmployee
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+
+    public function exportEmployee()
+    {
+        return Excel::download(new EmployeeListExport, 'employees.xlsx');
+    }
+
+    /**
+     * Summary of importEmployee
+     * @param mixed $validated
+     * @return array
+     */
+
+    public function importEmployee($validated)
+    {
+        $empList = Excel::import(new EmployeeListImport, $validated['file']);
+        $empSalary = Excel::import(new EmployeeSalaryImport, $validated['file']);
+        return [$empSalary, $empList];
     }
 }

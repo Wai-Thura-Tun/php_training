@@ -10,9 +10,17 @@
           <div class="elttl">
             Employee List <span>({{ count($employeeList) ?? '' }})</span>
           </div>
-          <a href="{{ route('create') }}" class="eaddbtn">
-            Create
-          </a>
+          <div class="emcebtn">
+            <a href="{{ route('create') }}" class="eaddbtn">
+              Create
+            </a>
+            <a href="{{ route('empexport') }}" class="eexpbtn">
+              Export
+            </a>
+            <a href="{{ route('import') }}" class="eexpbtn">
+              Import
+            </a>
+          </div>
         </div>
         @if (count($employeeList) > 0)
         <table>

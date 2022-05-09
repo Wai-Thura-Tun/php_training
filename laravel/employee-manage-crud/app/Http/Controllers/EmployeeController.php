@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Services\EmployeeServiceInterface;
+use App\Exports\EmployeeListExport;
 use App\Http\Requests\EmployeeSubmitRequest;
+use App\Http\Requests\ExcelValidationRequest;
+use App\Imports\EmployeeListImport;
+use App\Imports\EmployeeSalaryImport;
 
 class EmployeeController extends Controller
 {
@@ -85,6 +89,29 @@ class EmployeeController extends Controller
     public function deleteEmployeeList($id)
     {
         $this->employee->deleteEmployeeById($id);
+        return redirect('/');
+    }
+
+    /**
+     * Summary of export
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+
+    public function export() 
+    {
+        return $this->employee->exportEmployee();
+    }
+
+     /**
+      * Summary of import
+      * @param ExcelValidationRequest $request
+      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+      */
+
+    public function import(ExcelValidationRequest $request)
+    {
+        $validated = $request->validated();
+        $this->employee->importEmployee($validated);
         return redirect('/');
     }
 }

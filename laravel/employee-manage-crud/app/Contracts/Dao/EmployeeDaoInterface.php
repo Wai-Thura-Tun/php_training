@@ -8,4 +8,6 @@ interface EmployeeDaoInterface {
   public function editEmployeeById($id);
   public function updateEmployeeById($validated, $id,$eid);
   public function deleteEmployeeById($id);
+  public function exportEmployee();
+  public function importEmployee($validated);
 }

@@ -75,4 +75,25 @@ class EmployeeService implements EmployeeServiceInterface
     {
         return $this->employeeService->updateEmployeeById($validated, $id, $eid);
     }
+
+    /**
+     * Summary of export
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+
+    public function exportEmployee()
+    {
+        return $this->employeeService->exportEmployee();
+    }
+
+    /**
+     * Summary of importEmployee
+     * @param mixed $validated
+     * @return array
+     */
+
+    public function importEmployee($validated)
+    {
+        return $this->employeeService->importEmployee($validated);
+    }
 }
