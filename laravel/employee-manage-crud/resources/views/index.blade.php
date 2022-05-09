@@ -51,6 +51,9 @@
             @endforeach
           </tbody>
         </table>
+        <div class="pagi">
+          {{ $employeeList->links()}}
+        </div>
         @else
         <div class="nodata">No Data Found</div>
         @endif

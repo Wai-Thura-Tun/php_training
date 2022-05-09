@@ -136,3 +136,29 @@ td {
   font-size: 30px;
   text-align: center;
 }
+
+.pagi {
+  margin-top: 30px;
+}
+
+.pagi nav ul li{
+  display:inline-block;
+  margin:0px 2px;
+  padding: 5px;
+  border-radius: 5px;
+   border: 1px solid #000000;
+   text-align: center;
+}
+
+.pagi .page-item .page-link {
+  text-decoration: none;
+  color: #000;
+}
+
+.pagi .page-item.active .page-link {
+  color: #fff;
+}
+
+.pagi .page-item.active{
+  background-color:#000;
+}

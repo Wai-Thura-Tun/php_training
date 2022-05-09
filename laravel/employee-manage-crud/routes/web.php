@@ -1,6 +1,7 @@
 <?php
 
-use App\EmployeeList;
+use App\Model\EmployeeList;
+use App\Model\EmployeeSalary;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 

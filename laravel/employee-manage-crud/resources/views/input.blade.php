@@ -18,7 +18,7 @@
         @csrf
         <div class="inputCon">
           <label>Fullname:</label>
-          <input type="" name="fname" value="@if(isset($editData)) @foreach($editData as $list){{ $list->fullname ??''}}@endforeach @endif">
+          <input type="" name="fname" value="@if (isset($editData))@foreach ($editData as $list){{ $list->fullname ?? '' }}@endforeach @else {{ old('fname') ?? '' }}@endif">
         </div>
         @error('fname')
           <span class="errorbtn">{{ $message }}</span>
@@ -26,8 +26,8 @@
         <div class="inputCon">
           <label>Select Your Gender:</label>
           <select name="gender">
-            <option>Male</option>
-            <option>Female</option>
+            <option @if(isset($editData)) @foreach($editData as $list){{ $list->gender == 'Male' ? 'selected' : ''}}@endforeach @else {{old('gender') == 'Male' ? 'selected' : ''}} @endif">Male</option>
+            <option @if(isset($editData)) @foreach($editData as $list){{ $list->gender == 'Female' ? 'selected' : ''}}@endforeach @else {{old('gender') == 'Female' ? 'selected' : ''}} @endif">Female</option>
           </select>
         </div>
         @error('gender')
@@ -35,61 +35,56 @@
         @enderror
         <div class="inputCon">
           <label>Pick Date of Birth:</label>
-          <input type="date" name="dob" value="@php
-          if(isset($editData)){ 
-            foreach ($editData as $list) {
-              echo $list->dob;}
-            }
-              @endphp">
+          <input type="date" name="dob" value="@if(isset($editData))@php foreach($editData as $list){echo$list->dob;}@endphp@else{{ old('dob') ?? '' }}@endif">
         </div>
         @error('dob')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Nickname:</label>
-          <input type="text" name="nname" value="@if(isset($editData)) @foreach($editData as $list){{ $list->nickname ??''}}@endforeach @endif">
+          <input type="text" name="nname" value="@if (isset($editData))@foreach ($editData as $list){{ $list->nickname ?? '' }}@endforeach @else {{ old('nname') ?? '' }}@endif">
         </div>
         @error('nname')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Phone no:</label>
-          <input type="text" name="phone" value="@if(isset($editData)) @foreach($editData as $list){{ $list->phone ??''}}@endforeach @endif">
+          <input type="text" name="phone" value="@if (isset($editData))@foreach ($editData as $list){{ $list->phone ?? '' }}@endforeach @else {{ old('phone') ?? '' }}@endif">
         </div>
         @error('phone')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Email:</label>
-          <input type="" name="email" value="@if(isset($editData)) @foreach($editData as $list){{ $list->email ??''}}@endforeach @endif">
+          <input type="" name="email" value="@if (isset($editData))@foreach ($editData as $list){{ $list->email ?? '' }}@endforeach @else {{ old('email') ?? '' }}@endif">
         </div>
         @error('email')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Salary</label>
-          <input type="" name="salary" placeholder="e.g.$100" value="@if(isset($editData)) @foreach($editData as $list){{ $list->salary ??''}}@endforeach @endif">
+          <input type="" name="salary" placeholder="e.g.$100" value="@if (isset($editData))@foreach ($editData as $list){{ $list->salary ?? '' }}@endforeach @else {{ old('salary') ?? '' }}@endif">
         </div>
         @error('salary')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Position:</label>
-          <input type="" name="position" value="@if(isset($editData)) @foreach($editData as $list){{ $list->position ??''}}@endforeach @endif">
+          <input type="" name="position" value="@if (isset($editData))@foreach ($editData as $list){{ $list->position ?? '' }}@endforeach @else {{ old('position') ?? '' }}@endif">
         </div>
         @error('position')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Department:</label>
-          <input type="" name="depart" value="@if(isset($editData)) @foreach($editData as $list){{ $list->department ??''}}@endforeach @endif">
+          <input type="" name="depart" value="@if (isset($editData))@foreach ($editData as $list){{ $list->department ?? '' }}@endforeach @else {{ old('depart') ?? '' }}@endif">
         </div>
         @error('depart')
           <span class="errorbtn">{{ $message }}</span>
         @enderror
         <div class="inputCon">
           <label>Skype ID:</label>
-          <input type="" name="skype" placeholder="Skype ID" value="@if(isset($editData)) @foreach($editData as $list){{ $list->skyID ??''}}@endforeach @endif">
+          <input type="" name="skype" placeholder="Skype ID" value="@if (isset($editData))@foreach ($editData as $list){{ $list->skyID ?? '' }}@endforeach @else {{ old('skype') ?? '' }}@endif">
         </div>
         @error('skype')
           <span class="errorbtn">{{ $message }}</span>
