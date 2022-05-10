@@ -10,6 +10,8 @@ use App\Http\Requests\EmployeeSubmitRequest;
 use App\Http\Requests\ExcelValidationRequest;
 use App\Imports\EmployeeListImport;
 use App\Imports\EmployeeSalaryImport;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\FuncCall;
 
 class EmployeeController extends Controller
 {
@@ -113,5 +115,12 @@ class EmployeeController extends Controller
         $validated = $request->validated();
         $this->employee->importEmployee($validated);
         return redirect('/');
+    }
+
+    public function searchEmployeeList() {
+        $value = request()->query('search');
+        $employee = $this->employee->searchEmployee($value);
+        $employee->withPath('/search-employee?search='.$value,request()->query('search'),'&');
+        return view('index', compact('employee'));
     }
 }

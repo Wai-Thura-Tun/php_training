@@ -10,4 +10,5 @@ interface EmployeeDaoInterface {
   public function deleteEmployeeById($id);
   public function exportEmployee();
   public function importEmployee($validated);
+  public function searchEmployee($text);
 }

@@ -10,6 +10,10 @@ use App\Model\EmployeeSalary;
 use App\Http\Controllers\EmployeeController;
 use App\Imports\EmployeeListImport;
 use App\Imports\EmployeeSalaryImport;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeDao implements EmployeeDaoInterface
@@ -137,4 +141,47 @@ class EmployeeDao implements EmployeeDaoInterface
         $empSalary = Excel::import(new EmployeeSalaryImport, $validated['file']);
         return [$empSalary, $empList];
     }
+
+     /**
+      * Summary of paginate
+      * @param mixed $items
+      * @param mixed $perPage
+      * @param mixed $page
+      * @param mixed $options
+      * @return LengthAwarePaginator
+      */
+
+    public function paginate($items, $perPage = 1, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
+     /**
+      * Summary of searchEmployee
+      * @param mixed $text
+      * @return LengthAwarePaginator
+      */
+
+    public function searchEmployee($text)
+    {
+        $employee = DB::select(DB::raw(
+            "SELECT * FROM employee_lists as list INNER JOIN employee_salaries as salary ON 
+            list.id=salary.empID WHERE
+            list.fullname LIKE CONCAT(:fvalue,'%') OR
+            salary.position LIKE CONCAT(:pvalue,'%') OR
+            salary.department LIKE CONCAT(:dvalue,'%') AND
+            list.deleted_at is NULL AND 
+            salary.deleted_at is NULL"),array(
+                'fvalue' => $text,
+                'pvalue' => $text,
+                'dvalue' => $text,
+            ));
+
+        $employeeData = $this->paginate($employee);
+        return $employeeData;
+    }
+
+    
 }

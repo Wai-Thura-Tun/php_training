@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\Services\EmployeeServiceInterface;
 use App\Contracts\Dao\EmployeeDaoInterface;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EmployeeService implements EmployeeServiceInterface
 {
@@ -95,5 +96,17 @@ class EmployeeService implements EmployeeServiceInterface
     public function importEmployee($validated)
     {
         return $this->employeeService->importEmployee($validated);
+    }
+
+     /**
+      * Summary of searchEmployee
+      * @param mixed $text
+      * @return LengthAwarePaginator
+      */
+
+
+    public function searchEmployee($text)
+    {
+        return $this->employeeService->searchEmployee($text);
     }
 }

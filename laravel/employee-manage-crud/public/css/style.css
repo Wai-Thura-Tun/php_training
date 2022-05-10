@@ -21,6 +21,7 @@
   position: fixed;
   top: 0px;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 20px 10px;
   background-color: #000;
@@ -30,6 +31,8 @@
 .elistcon .elttl {
   font-size: 20px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .elistcon .eaddbtn,
@@ -198,3 +201,48 @@ td {
   color: #fff;
   text-decoration: none;
 }
+
+.container .searchform {
+  margin-top: 0px;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  margin-left: 40px;
+}
+
+.container .searchform button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  transition: all .4s ease-in-out;
+}
+
+.container .searchform input {
+  height: 35px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-indent: 10px;
+  width:80%;
+}
+
+.container .searchform button:hover {
+  padding: 10px 15px;
+}
+
+.container .searchResult {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container .searchttl {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.container .searchResult table {
+  margin-top: 0px;
+}
+

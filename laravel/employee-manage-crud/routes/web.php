@@ -27,8 +27,9 @@ Route::post('/create-employee',[EmployeeController::class,'addEmployeeList'])->n
 Route::get('/import-employee', function(){
     return view('file');
 })->name('import');
-Route::get('employees/export/', [EmployeeController::class, 'export'])->name('empexport');
-Route::post('employees/import/', [EmployeeController::class, 'import'])->name('empimport');
+Route::get('/employees/export', [EmployeeController::class, 'export'])->name('empexport');
+Route::post('/employees/import', [EmployeeController::class, 'import'])->name('empimport');
+Route::get('/search-employee', [EmployeeController::class, 'searchEmployeeList'])->name('search');
 
 
 
