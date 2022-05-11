@@ -12,7 +12,7 @@
             Employee List <span></span>
             <form class="searchform" method="GET">
               @csrf
-              <input type="search" placeholder="Search" name="search" class="searchInput">
+              <input type="search" placeholder="Search By Name,Position,Department" name="search" class="searchInput">
               <button type="button" class="searchBtn"><i class="fa fa-search"></i></button>
             </form>
           </div>
@@ -120,11 +120,25 @@
     <script>
       const searchBtnTag = document.querySelector('.searchBtn');
       const searchTag = document.querySelector('.searchInput');
+      let value = "";
+      searchTag.addEventListener('keyup', () => {
+        value = searchTag.value;
+      });
       searchBtnTag.addEventListener('click',() => {
-        const value = searchTag.value;
-        const url = window.location.href + "search-employee?search=" + value;
-        window.location.href = url;
-      })
+        if (value) {
+          const url = window.location.origin + "/search-employee?search=" + value;
+          window.location.href = url;
+        }
+      });
+      searchTag.addEventListener('keypress', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          if (value) {
+            const url = window.location.origin + "/search-employee?search=" + value;
+            window.location.href = url;
+          }
+        }
+      });
     </script>
   </body>
 </html>

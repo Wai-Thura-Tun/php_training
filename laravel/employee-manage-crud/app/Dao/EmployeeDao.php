@@ -178,7 +178,6 @@ class EmployeeDao implements EmployeeDaoInterface
                 'pvalue' => $text,
                 'dvalue' => $text,
             ));
-
         $employeeData = $this->paginate($employee);
         return $employeeData;
     }
