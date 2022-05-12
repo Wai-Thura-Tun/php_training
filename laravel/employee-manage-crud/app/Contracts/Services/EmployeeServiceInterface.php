@@ -14,4 +14,7 @@ interface EmployeeServiceInterface
   public function exportEmployee();
   public function importEmployee($validated);
   public function searchEmployee($text);
+  public function fetchAllFromApi();
+  public function fetchItemFromApi($id);
+  public function updateFromApi($validated,$id);
 }

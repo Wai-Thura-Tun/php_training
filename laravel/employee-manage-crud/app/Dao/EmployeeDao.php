@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\FuncCall;
 
 class EmployeeDao implements EmployeeDaoInterface
 {
@@ -142,14 +143,14 @@ class EmployeeDao implements EmployeeDaoInterface
         return [$empSalary, $empList];
     }
 
-     /**
-      * Summary of paginate
-      * @param mixed $items
-      * @param mixed $perPage
-      * @param mixed $page
-      * @param mixed $options
-      * @return LengthAwarePaginator
-      */
+    /**
+     * Summary of paginate
+     * @param mixed $items
+     * @param mixed $perPage
+     * @param mixed $page
+     * @param mixed $options
+     * @return LengthAwarePaginator
+     */
 
     public function paginate($items, $perPage = 1, $page = null, $options = [])
     {
@@ -158,11 +159,11 @@ class EmployeeDao implements EmployeeDaoInterface
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
-     /**
-      * Summary of searchEmployee
-      * @param mixed $text
-      * @return LengthAwarePaginator
-      */
+    /**
+     * Summary of searchEmployee
+     * @param mixed $text
+     * @return LengthAwarePaginator
+     */
 
     public function searchEmployee($text)
     {
@@ -173,14 +174,141 @@ class EmployeeDao implements EmployeeDaoInterface
             salary.position LIKE CONCAT(:pvalue,'%') OR
             salary.department LIKE CONCAT(:dvalue,'%') AND
             list.deleted_at is NULL AND 
-            salary.deleted_at is NULL"),array(
-                'fvalue' => $text,
-                'pvalue' => $text,
-                'dvalue' => $text,
-            ));
+            salary.deleted_at is NULL"
+        ), array(
+            'fvalue' => $text,
+            'pvalue' => $text,
+            'dvalue' => $text,
+        ));
         $employeeData = $this->paginate($employee);
         return $employeeData;
     }
 
-    
+    //API
+    /**
+     * Summary of fetchAllFromApi
+     * @return array<array>
+     */
+
+    public function fetchAllFromApi()
+    {
+        $emplyee = DB::table('employee_lists as list')
+            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
+            ->select(
+                'list.id',
+                'list.fullname',
+                'list.nickname',
+                'list.gender',
+                'list.dob',
+                'list.phone',
+                'list.email',
+                'salary.empID',
+                'salary.salary',
+                'salary.position',
+                'salary.department',
+                'salary.skyID'
+            )
+            ->whereNull('list.deleted_at')
+            ->whereNull('salary.deleted_at')
+            ->get();
+        $data = [];
+        foreach ($emplyee as $key) {
+            $json['id'] = $key->id;
+            $json['fullname'] = $key->fullname;
+            $json['nickname'] = $key->nickname;
+            $json['gender'] = $key->gender;
+            $json['dob'] = $key->dob;
+            $json['phone'] = $key->phone;
+            $json['email'] = $key->email;
+            $json['empDetail'] = [
+                'empID' => $key->empID,
+                'salary' => $key->salary,
+                'position' => $key->position,
+                'department' => $key->department,
+                'skypeID' => $key->skyID,
+            ];
+
+            $data['employee' . $key->id] = $json;
+        }
+        return $data;
+    }
+
+    /**
+     * Summary of fetchItemFromApi
+     * @param mixed $id
+     * @return array<array>
+     */
+
+    public function fetchItemFromApi($id)
+    {
+        $emplyeeID = DB::table('employee_lists as list')
+            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
+            ->select(
+                'list.id',
+                'list.fullname',
+                'list.nickname',
+                'list.gender',
+                'list.dob',
+                'list.phone',
+                'list.email',
+                'salary.empID',
+                'salary.salary',
+                'salary.position',
+                'salary.department',
+                'salary.skyID'
+            )
+            ->whereNull('list.deleted_at')
+            ->whereNull('salary.deleted_at')
+            ->where('list.id', '=', $id)
+            ->get();
+        $data = [];
+        foreach ($emplyeeID as $key) {
+            $json['id'] = $key->id;
+            $json['fullname'] = $key->fullname;
+            $json['nickname'] = $key->nickname;
+            $json['gender'] = $key->gender;
+            $json['dob'] = $key->dob;
+            $json['phone'] = $key->phone;
+            $json['email'] = $key->email;
+            $json['empDetail'] = [
+                'empID' => $key->empID,
+                'salary' => $key->salary,
+                'position' => $key->position,
+                'department' => $key->department,
+                'skypeID' => $key->skyID,
+            ];
+            $data['employee' . $key->id] = $json;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Summary of updateFromApi
+     * @param mixed $validated
+     * @param mixed $id
+     * @return array
+     */
+
+    public function updateFromApi($validated, $id)
+    {
+        $emplyList = EmployeeList::find($id);
+        $emplyList->fullname = $validated['fname'];
+        $emplyList->nickname = $validated['nname'];
+        $emplyList->gender = $validated['gender'];
+        $emplyList->dob = $validated['dob'];
+        $emplyList->phone = $validated['phone'];
+        $emplyList->email = $validated['email'];
+        $emplyList->save();
+        $emplySalary = DB::table('employee_salaries')->where('sid', '=', $id)
+            ->update(array(
+                'salary' => $validated['salary'],
+                'position' => $validated['position'],
+                'department' => $validated['depart'],
+                'skyID' => $validated['skype'],
+                'updated_at' => now()
+            ));
+
+        return [$emplyList, $emplySalary];
+    }
 }

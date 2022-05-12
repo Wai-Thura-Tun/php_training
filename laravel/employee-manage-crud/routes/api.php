@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\EmployeeApiController;
+use App\Model\EmployeeList;
+use App\Model\EmployeeSalary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/employee-lists', [EmployeeApiController::class, 'index']);
+Route::get('/employee-lists/{id}', [EmployeeApiController::class, 'getEmployeeID']);
+Route::post('/add-employee', [EmployeeApiController::class, 'insert']);
+Route::delete('/delete-employee/{id}', [EmployeeApiController::class, 'delete']);
+Route::put('/update-employee/{id}', [EmployeeApiController::class, 'update']);

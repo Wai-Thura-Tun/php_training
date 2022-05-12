@@ -98,15 +98,49 @@ class EmployeeService implements EmployeeServiceInterface
         return $this->employeeService->importEmployee($validated);
     }
 
-     /**
-      * Summary of searchEmployee
-      * @param mixed $text
-      * @return LengthAwarePaginator
-      */
+    /**
+     * Summary of searchEmployee
+     * @param mixed $text
+     * @return LengthAwarePaginator
+     */
 
 
     public function searchEmployee($text)
     {
         return $this->employeeService->searchEmployee($text);
+    }
+
+    //API
+    /**
+     * Summary of fetchAllFromApi
+     * @return array<array>
+     */
+
+    public function fetchAllFromApi()
+    {
+        return $this->employeeService->fetchAllFromApi();
+    }
+
+    /**
+     * Summary of fetchItemFromApi
+     * @param mixed $id
+     * @return array<array>
+     */
+
+    public function fetchItemFromApi($id)
+    {
+        return $this->employeeService->fetchItemFromApi($id);
+    }
+
+    /**
+     * Summary of updateFromApi
+     * @param mixed $validated
+     * @param mixed $id
+     * @return array
+     */
+
+    public function updateFromApi($validated, $id)
+    {
+        return $this->employeeService->updateFromApi($validated, $id);
     }
 }
