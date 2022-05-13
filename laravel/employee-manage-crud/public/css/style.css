@@ -256,3 +256,50 @@ td {
   color: #fff;
 }
 
+.mailreturn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.container .mailform {
+  width: 20%;
+}
+
+.container .mailform label {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.container .mailform input{
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 15px;
+  height: 35px;
+  width: 100%;
+  margin-bottom: 20px;
+  text-indent: 10px;
+}
+
+.comreturn {
+  text-decoration: none;
+  padding:10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.completeCon {
+  margin-top: 30px;
+}
+
+.completeCon h2 {
+  margin-bottom: 20px;
+}
+

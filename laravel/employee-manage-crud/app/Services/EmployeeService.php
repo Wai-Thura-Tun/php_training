@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Contracts\Services\EmployeeServiceInterface;
 use App\Contracts\Dao\EmployeeDaoInterface;
+use App\Mail\EmployeeMail;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Facades\Mail;
 class EmployeeService implements EmployeeServiceInterface
 {
     private $employeeService;
@@ -72,9 +73,9 @@ class EmployeeService implements EmployeeServiceInterface
      * @return array (updated Object)
      */
 
-    public function updateEmployeeById($validated, $id, $eid)
+    public function updateEmployeeById($validated, $id)
     {
-        return $this->employeeService->updateEmployeeById($validated, $id, $eid);
+        return $this->employeeService->updateEmployeeById($validated, $id);
     }
 
     /**
@@ -132,15 +133,11 @@ class EmployeeService implements EmployeeServiceInterface
         return $this->employeeService->fetchItemFromApi($id);
     }
 
-    /**
-     * Summary of updateFromApi
-     * @param mixed $validated
-     * @param mixed $id
-     * @return array
-     */
-
-    public function updateFromApi($validated, $id)
+    public function sendToMail(Request $request)
     {
-        return $this->employeeService->updateFromApi($validated, $id);
+        $data = $this->employeeService->getDataToMail();
+        $details = ["title" => "Employee List", "body" => "The latest 5 Employee List is Below", "data" => $data];
+        return Mail::to($request->mail)->send(new EmployeeMail($details));
     }
+
 }

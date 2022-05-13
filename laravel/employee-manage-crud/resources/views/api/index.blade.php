@@ -27,6 +27,9 @@
             <a href="{{ route('import') }}" class="eexpbtn">
               Import
             </a>
+            <a href="{{ route('apimail') }}" class="eexpbtn">
+              Mail
+            </a>
           </div>
         </div>
         <table>

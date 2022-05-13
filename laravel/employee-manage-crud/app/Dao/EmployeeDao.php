@@ -25,39 +25,35 @@ class EmployeeDao implements EmployeeDaoInterface
      */
     public function getEmployee()
     {
-        $emplyee = DB::table('employee_lists as list')
-            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
-            ->whereNull('list.deleted_at')
-            ->whereNull('salary.deleted_at')
-            ->paginate(2);
+        $emplyee = EmployeeList::paginate(2);
         return $emplyee;
     }
 
-    /**
-     * Summary of saveEmployee
-     * @param mixed $validated
-     * @return array (Saved Object)
-     */
+     /**
+      * Summary of saveEmployee
+      * @param mixed $validated
+      * @return EmployeeList
+      */
 
     public function saveEmployee($validated)
     {
         $emplyList = new EmployeeList();
-        $emplySalary = new EmployeeSalary();
+        $lastList = EmployeeList::latest()->first();
         $emplyList->fullname = $validated['fname'];
         $emplyList->nickname = $validated['nname'];
         $emplyList->gender = $validated['gender'];
         $emplyList->dob = $validated['dob'];
         $emplyList->phone = $validated['phone'];
-        $emplyList->email = $validated['email'];
-        $emplyList->save();
-        $lastEList = DB::table('employee_lists')->latest()->first();
-        $emplySalary->empID = $lastEList->id;
+        $emplyList->email = $validated['email'];  
+        $emplyList->save();      
+        $emplySalary = new EmployeeSalary();
+        $emplySalary->empID = $lastList->id + 1;
         $emplySalary->salary = $validated['salary'];
         $emplySalary->position = $validated['position'];
         $emplySalary->department = $validated['depart'];
         $emplySalary->skyID = $validated['skype'];
-        $emplySalary->save();
-        return [$emplyList, $emplySalary];
+        $emplyList->salary()->save($emplySalary);
+        return $emplyList;
     }
 
     /**
@@ -68,10 +64,7 @@ class EmployeeDao implements EmployeeDaoInterface
 
     public function editEmployeeById($id)
     {
-        $editEmployee = DB::table('employee_lists as list')
-            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
-            ->where('list.id', '=', $id)
-            ->get();
+        $editEmployee = EmployeeList::find($id);
         return $editEmployee;
     }
 
@@ -84,11 +77,9 @@ class EmployeeDao implements EmployeeDaoInterface
     public function deleteEmployeeById($id)
     {
         $epList = EmployeeList::find($id);
+        $epList->salary()->delete();
         $epList->delete();
-        $epSalary = DB::table('employee_salaries')->where('empID', '=', $id)->update(array(
-            'deleted_at' => now()
-        ));
-        return [$epList, $epSalary];
+        return $epList;
     }
 
     /**
@@ -99,7 +90,7 @@ class EmployeeDao implements EmployeeDaoInterface
      * @return array (updated Object)
      */
 
-    public function updateEmployeeById($validated, $id, $eid)
+    public function updateEmployeeById($validated, $id)
     {
         $emplyList = EmployeeList::find($id);
         $emplyList->fullname = $validated['fname'];
@@ -109,15 +100,13 @@ class EmployeeDao implements EmployeeDaoInterface
         $emplyList->phone = $validated['phone'];
         $emplyList->email = $validated['email'];
         $emplyList->save();
-        $emplySalary = DB::table('employee_salaries')->where('sid', '=', $eid)
-            ->update(array(
-                'salary' => $validated['salary'],
-                'position' => $validated['position'],
-                'department' => $validated['depart'],
-                'skyID' => $validated['skype'],
-                'updated_at' => now()
-            ));
-        return [$emplyList, $emplySalary];
+        $emplyList->salary()->update([
+            'salary' => $validated['salary'],
+            'position' => $validated['position'],
+            'department' => $validated['depart'],
+            'skyID' => $validated['skype']
+        ]);
+        return $emplyList;
     }
 
     /**
@@ -192,27 +181,9 @@ class EmployeeDao implements EmployeeDaoInterface
 
     public function fetchAllFromApi()
     {
-        $emplyee = DB::table('employee_lists as list')
-            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
-            ->select(
-                'list.id',
-                'list.fullname',
-                'list.nickname',
-                'list.gender',
-                'list.dob',
-                'list.phone',
-                'list.email',
-                'salary.empID',
-                'salary.salary',
-                'salary.position',
-                'salary.department',
-                'salary.skyID'
-            )
-            ->whereNull('list.deleted_at')
-            ->whereNull('salary.deleted_at')
-            ->get();
+        $employee = EmployeeList::all();
         $data = [];
-        foreach ($emplyee as $key) {
+        foreach ($employee as $key) {
             $json['id'] = $key->id;
             $json['fullname'] = $key->fullname;
             $json['nickname'] = $key->nickname;
@@ -221,11 +192,11 @@ class EmployeeDao implements EmployeeDaoInterface
             $json['phone'] = $key->phone;
             $json['email'] = $key->email;
             $json['empDetail'] = [
-                'empID' => $key->empID,
-                'salary' => $key->salary,
-                'position' => $key->position,
-                'department' => $key->department,
-                'skypeID' => $key->skyID,
+                'empID' => $key->salary->empID,
+                'salary' => $key->salary->salary,
+                'position' => $key->salary->position,
+                'department' => $key->salary->department,
+                'skypeID' => $key->salary->skyID,
             ];
 
             $data['employee' . $key->id] = $json;
@@ -233,82 +204,40 @@ class EmployeeDao implements EmployeeDaoInterface
         return $data;
     }
 
-    /**
-     * Summary of fetchItemFromApi
-     * @param mixed $id
-     * @return array<array>
-     */
+     /**
+      * Summary of fetchItemFromApi
+      * @param mixed $id
+      * @return array
+      */
 
     public function fetchItemFromApi($id)
     {
-        $emplyeeID = DB::table('employee_lists as list')
-            ->join('employee_salaries as salary', 'list.id', '=', 'salary.empID')
-            ->select(
-                'list.id',
-                'list.fullname',
-                'list.nickname',
-                'list.gender',
-                'list.dob',
-                'list.phone',
-                'list.email',
-                'salary.empID',
-                'salary.salary',
-                'salary.position',
-                'salary.department',
-                'salary.skyID'
-            )
-            ->whereNull('list.deleted_at')
-            ->whereNull('salary.deleted_at')
-            ->where('list.id', '=', $id)
-            ->get();
-        $data = [];
-        foreach ($emplyeeID as $key) {
-            $json['id'] = $key->id;
-            $json['fullname'] = $key->fullname;
-            $json['nickname'] = $key->nickname;
-            $json['gender'] = $key->gender;
-            $json['dob'] = $key->dob;
-            $json['phone'] = $key->phone;
-            $json['email'] = $key->email;
-            $json['empDetail'] = [
-                'empID' => $key->empID,
-                'salary' => $key->salary,
-                'position' => $key->position,
-                'department' => $key->department,
-                'skypeID' => $key->skyID,
-            ];
-            $data['employee' . $key->id] = $json;
+        $emplyeeID = EmployeeList::find($id);
+        if (!$emplyeeID) {
+            return ["message" => "employee not found"];
         }
-
+        $data = [];
+            $json['id'] = $emplyeeID->id;
+            $json['fullname'] = $emplyeeID->fullname;
+            $json['nickname'] = $emplyeeID->nickname;
+            $json['gender'] = $emplyeeID->gender;
+            $json['dob'] = $emplyeeID->dob;
+            $json['phone'] = $emplyeeID->phone;
+            $json['email'] = $emplyeeID->email;
+            $json['empDetail'] = [
+                'empID' => $emplyeeID->salary->empID,
+                'salary' => $emplyeeID->salary->salary,
+                'position' => $emplyeeID->salary->position,
+                'department' => $emplyeeID->salary->department,
+                'skypeID' => $emplyeeID->salary->skyID,
+            ];
+        $data['employee' . $emplyeeID->id] = $json;
         return $data;
     }
 
-    /**
-     * Summary of updateFromApi
-     * @param mixed $validated
-     * @param mixed $id
-     * @return array
-     */
-
-    public function updateFromApi($validated, $id)
-    {
-        $emplyList = EmployeeList::find($id);
-        $emplyList->fullname = $validated['fname'];
-        $emplyList->nickname = $validated['nname'];
-        $emplyList->gender = $validated['gender'];
-        $emplyList->dob = $validated['dob'];
-        $emplyList->phone = $validated['phone'];
-        $emplyList->email = $validated['email'];
-        $emplyList->save();
-        $emplySalary = DB::table('employee_salaries')->where('sid', '=', $id)
-            ->update(array(
-                'salary' => $validated['salary'],
-                'position' => $validated['position'],
-                'department' => $validated['depart'],
-                'skyID' => $validated['skype'],
-                'updated_at' => now()
-            ));
-
-        return [$emplyList, $emplySalary];
+    public function getDataToMail() {
+        $employee = EmployeeList::latest()->take(5)->get();
+        return $employee;
     }
+    
 }

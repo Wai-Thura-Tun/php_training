@@ -75,10 +75,10 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
-    public function updateEmployeeList(EmployeeSubmitRequest $request, $id, $eid)
+    public function updateEmployeeList(EmployeeSubmitRequest $request, $id)
     {
         $validated = $request->validated();
-        $this->employee->updateEmployeeById($validated, $id, $eid);
+        $this->employee->updateEmployeeById($validated, $id);
         return redirect('/');
     }
 
@@ -122,5 +122,10 @@ class EmployeeController extends Controller
         $employee = $this->employee->searchEmployee($value);
         $employee->withPath('/search-employee?search='.$value,request()->query('search'),'&');
         return view('index', compact('employee'));
+    }
+
+    public function sendmail(Request $request) {
+        $this->employee->sendToMail($request);
+        return view('complete');
     }
 }

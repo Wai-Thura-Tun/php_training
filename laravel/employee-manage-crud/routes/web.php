@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [EmployeeController::class, 'showEmployeeList'])->name('home');
 Route::get('/edit-employee/{id}', [EmployeeController::class, 'editEmployeeList'])->name('edit');
 Route::get('/delete-employee/{id}', [EmployeeController::class, 'deleteEmployeeList'])->name('delete');
-Route::post('/update-employee/{id}/{eid}', [EmployeeController::class, 'updateEmployeeList'])->name('update');
+Route::post('/update-employee/{id}', [EmployeeController::class, 'updateEmployeeList'])->name('update');
 Route::get('/create-employee', function () {
     return view('input');
 })->name('create');
@@ -40,3 +40,10 @@ Route::get('/api/edit/{id}', function ($id) {
 Route::get('/api/create', function () {
     return view('api/input');
 })->name('api-create');
+Route::get('/api/mail', function(){
+    return view('api/mailform');
+})->name('apimail');
+Route::get('employee/mail', function(){
+    return view('mailform');
+})->name('mail');
+Route::post('/employee/sendmail', [EmployeeController::class, 'sendmail'])->name('sendmail');

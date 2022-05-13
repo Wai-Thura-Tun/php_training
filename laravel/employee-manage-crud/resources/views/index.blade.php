@@ -26,6 +26,9 @@
             <a href="{{ route('import') }}" class="eexpbtn">
               Import
             </a>
+            <a href="{{ route('mail') }}" class="eexpbtn">
+              Mail
+            </a>
           </div>
         </div>
         @if (!empty($employeeList))
@@ -48,17 +51,17 @@
           <tbody>
             @foreach ($employeeList as $list)
               <tr>
-                <th>{{ $list->id }}</th>
-                <th>{{ $list->fullname }}</th>
-                <th>{{ $list->gender }}</th>
-                <th>{{ $list->dob }}</th>
-                <th>{{ $list->nickname }}</th>
-                <th>{{ $list->phone }}</th>
-                <th>{{ $list->email }}</th>
-                <th>{{ $list->salary }}</th>
-                <th>{{ $list->position }}</th>
-                <th>{{ $list->department }}</th>
-                <th>{{ $list->skyID }}</th>
+                <td>{{ $list->id }}</td>
+                <td>{{ $list->fullname }}</td>
+                <td>{{ $list->gender }}</td>
+                <td>{{ $list->dob }}</td>
+                <td>{{ $list->nickname }}</td>
+                <td>{{ $list->phone }}</td>
+                <td>{{ $list->email }}</td>
+                <td>{{ $list->salary->salary }}</td>
+                <td>{{ $list->salary->position }}</td>
+                <td>{{ $list->salary->department }}</td>
+                <td>{{ $list->salary->skyID }}</td>
                 <td><a class="editbtn" href="{{ route('edit',['id' => $list->id ]) }}">Edit</a></td>
                 <td><a class="deletebtn" href="{{ route('delete',['id' => $list->id ]) }}">Delete</a></td>
               </tr>
@@ -99,10 +102,10 @@
                 <th>{{ $list->nickname }}</th>
                 <th>{{ $list->phone }}</th>
                 <th>{{ $list->email }}</th>
-                <th>{{ $list->salary }}</th>
-                <th>{{ $list->position }}</th>
-                <th>{{ $list->department }}</th>
-                <th>{{ $list->skyID }}</th>
+                <th>{{ $list->salary->salary }}</th>
+                <th>{{ $list->salary->position }}</th>
+                <th>{{ $list->salary->department }}</th>
+                <th>{{ $list->salary->skyID }}</th>
                 <td><a class="editbtn" href="{{ route('edit',['id' => $list->id ]) }}">Edit</a></td>
                 <td><a class="deletebtn" href="{{ route('delete',['id' => $list->id ]) }}">Delete</a></td>
               </tr>

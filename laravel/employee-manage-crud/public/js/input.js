@@ -1,15 +1,19 @@
-let addURL = window.location.origin + "/api/add-employee";
-let fullname;
-let nickname;
-let gender;
-let dob;
-let salary;
-let position;
-let depart;
-let skyID;
-let phone;
-let email;
-$(document).on('keyup change', function () {
+const apiDomain = "http://127.0.0.1:8000";
+const addURL = apiDomain + "/api/add-employee";
+const editID = editApiData;
+const updateURL = apiDomain + "/api/update-employee/" + editID
+let fullname,
+  nickname,
+  gender,
+  dob,
+  salary,
+  position,
+  depart,
+  skyID,
+  phone,
+  email;
+
+function updateInput() {
   fullname = $('.fname').val();
   nickname = $('.nname').val();
   gender = $(".gender option:selected").text();
@@ -20,18 +24,19 @@ $(document).on('keyup change', function () {
   phone = $('.phone').val();
   email = $(".email").val();
   skyID = $('.skype').val();
-});
+}
+
 function resetInput(data) {
   if (data.message == "Validation errors") {
-    $('#fname').text(data.data.fname);
-    $('#nname').text(data.data.nname);
-    $('#dob').text(data.data.dob);
-    $('#salary').text(data.data.salary);
-    $('#position').text(data.data.position);
-    $('#depart').text(data.data.depart);
-    $('#phone').text(data.data.phone);
-    $("#email").text(data.data.email);
-    $('#skype').text(data.data.skype);
+    $('#fname').text(data.data.fname ?? "");
+    $('#nname').text(data.data.nname ?? "");
+    $('#dob').text(data.data.dob ?? "");
+    $('#salary').text(data.data.salary ?? "");
+    $('#position').text(data.data.position ?? "");
+    $('#depart').text(data.data.depart ?? "");
+    $('#phone').text(data.data.phone ?? "");
+    $("#email").text(data.data.email ?? "");
+    $('#skype').text(data.data.skype ?? "");
     $('.errorbtn').each(function () {
       let text = $(this).text();
       if (text == "") {
@@ -61,9 +66,8 @@ function resetInput(data) {
   $('.apiStatus').fadeIn('slow').delay(1000).fadeOut('slow');
 }
 
-let editID = editApiData;
-let editDataURL = window.location.origin + "/api/employee-lists/" + editID;
-if (editID) {
+function getEditData(id) {
+  let editDataURL = apiDomain + "/api/employee-lists/" + id;
   $.ajax({
     url: editDataURL,
     type: "GET",
@@ -89,51 +93,63 @@ if (editID) {
       $('.ajaxAddBtn').text("Update");
     }
   })
-  let updateURL = window.location.origin + "/api/update-employee/" + editID
-  $('.ajaxAddBtn').on('click', function () {
-    $.ajax({
-      url: updateURL,
-      type: "PUT",
-      data: {
-        'fname': fullname,
-        'gender': gender,
-        'dob': dob,
-        'nname': nickname,
-        'phone': phone,
-        'email': email,
-        'salary': salary,
-        'position': position,
-        'depart': depart,
-        'skype': skyID
-      },
-      success: function (data) {
-        resetInput(data);
-      }
-    })
+}
 
+function updateData(updateURL) {
+  $.ajax({
+    url: updateURL,
+    type: "PUT",
+    data: {
+      'fname': fullname,
+      'gender': gender,
+      'dob': dob,
+      'nname': nickname,
+      'phone': phone,
+      'email': email,
+      'salary': salary,
+      'position': position,
+      'depart': depart,
+      'skype': skyID
+    },
+    success: function (data) {
+      resetInput(data);
+    }
+  })
+}
+
+function addData() {
+  $.ajax({
+    url: addURL,
+    type: "POST",
+    data: {
+      'fname': fullname,
+      'gender': gender,
+      'dob': dob,
+      'nname': nickname,
+      'phone': phone,
+      'email': email,
+      'salary': salary,
+      'position': position,
+      'depart': depart,
+      'skype': skyID
+    },
+    success: function (data) {
+      resetInput(data);
+    }
+  })
+}
+$(document).on('keyup change', function () {
+  updateInput();
+});
+
+if (editID) {
+  getEditData(editID);
+  $('.ajaxAddBtn').on('click', function () {
+    updateData(updateURL);
   })
 }
 else {
   $('.ajaxAddBtn').on('click', function () {
-    $.ajax({
-      url: addURL,
-      type: "POST",
-      data: {
-        'fname': fullname,
-        'gender': gender,
-        'dob': dob,
-        'nname': nickname,
-        'phone': phone,
-        'email': email,
-        'salary': salary,
-        'position': position,
-        'depart': depart,
-        'skype': skyID
-      },
-      success: function (data) {
-        resetInput(data);
-      }
-    })
-
+    addData();
   })
 }

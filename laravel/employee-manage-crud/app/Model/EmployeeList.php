@@ -13,4 +13,8 @@ class EmployeeList extends Model
      * @var mixed
      */
     protected $fillable = ["fullname", "nickname", "gender", "dob", "phone", "email"];
+
+    public function salary() {
+        return $this->hasOne(EmployeeSalary::class,'empID','id');
+    }
 }

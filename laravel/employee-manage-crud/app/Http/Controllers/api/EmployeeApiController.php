@@ -88,7 +88,7 @@ class EmployeeApiController extends Controller
     public function update(EmployeeSubmitRequest $request, $id)
     {
         $validated = $request->validated();
-        $this->employeeService->updateFromApi($validated, $id);
+        $this->employeeService->updateEmployeeById($validated, $id);
         return response()->json(['message' => 'Successfully updated.'], 200);
     }
 }
