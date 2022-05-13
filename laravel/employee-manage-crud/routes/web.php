@@ -20,30 +20,17 @@ Route::get('/', [EmployeeController::class, 'showEmployeeList'])->name('home');
 Route::get('/edit-employee/{id}', [EmployeeController::class, 'editEmployeeList'])->name('edit');
 Route::get('/delete-employee/{id}', [EmployeeController::class, 'deleteEmployeeList'])->name('delete');
 Route::post('/update-employee/{id}', [EmployeeController::class, 'updateEmployeeList'])->name('update');
-Route::get('/create-employee', function () {
-    return view('input');
-})->name('create');
+Route::get('/create-employee', [EmployeeController::class, 'createEmployee'])->name('create');
 Route::post('/create-employee', [EmployeeController::class, 'addEmployeeList'])->name('add');
-Route::get('/import-employee', function () {
-    return view('file');
-})->name('import');
+Route::get('/import-employee', [EmployeeController::class, 'importEmployeeView'])->name('import');
 Route::get('/employees/export', [EmployeeController::class, 'export'])->name('empexport');
 Route::post('/employees/import', [EmployeeController::class, 'import'])->name('empimport');
 Route::get('/search-employee', [EmployeeController::class, 'searchEmployeeList'])->name('search');
-Route::get('/api', function () {
-    return view('api/index');
-})->name('api');
-Route::get('/api/edit/{id}', function ($id) {
-    $editData = $id;
-    return view('api/input', compact('editData'));
-})->name('api-edit');
-Route::get('/api/create', function () {
-    return view('api/input');
-})->name('api-create');
-Route::get('/api/mail', function(){
-    return view('api/mailform');
-})->name('apimail');
-Route::get('employee/mail', function(){
-    return view('mailform');
-})->name('mail');
+Route::get('employee/mail', [EmployeeController::class, 'showEmployeeMail'])->name('mail');
 Route::post('/employee/sendmail', [EmployeeController::class, 'sendmail'])->name('sendmail');
+//API
+Route::get('/api', [EmployeeController::class, 'showApiIndex'])->name('api');
+Route::get('/api/edit/{id}', [EmployeeController::class, 'editApiData'])->name('api-edit');
+Route::get('/api/create', [EmployeeController::class, 'createApiData'])->name('api-create');
+Route::get('/api/mail', [EmployeeController::class, 'showApiMail'])->name('apimail');
+

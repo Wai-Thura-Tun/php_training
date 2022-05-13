@@ -30,8 +30,7 @@ class EmployeeMail extends Mailable
      */
     public function build()
     {
-        return $this->from("testbot907@gmail.com", "Wai Thura")
-            ->subject('Employee Lists')
+        return $this->subject('Employee Lists')
             ->view('mail.EmployeeMail');
     }
 }

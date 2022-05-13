@@ -136,7 +136,11 @@ class EmployeeService implements EmployeeServiceInterface
     public function sendToMail(Request $request)
     {
         $data = $this->employeeService->getDataToMail();
-        $details = ["title" => "Employee List", "body" => "The latest 5 Employee List is Below", "data" => $data];
+        $details = [
+            "title" => "Employee List",
+            "body" => "The latest 5 Employee List is Below",
+            "data" => $data
+        ];
         return Mail::to($request->mail)->send(new EmployeeMail($details));
     }
 

@@ -117,6 +117,11 @@ class EmployeeController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Summary of searchEmployeeList
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function searchEmployeeList() {
         $value = request()->query('search');
         $employee = $this->employee->searchEmployee($value);
@@ -124,8 +129,79 @@ class EmployeeController extends Controller
         return view('index', compact('employee'));
     }
 
+    /**
+     * Summary of sendmail
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function sendmail(Request $request) {
         $this->employee->sendToMail($request);
         return view('complete');
+    }
+
+    /**
+     * Summary of createEmployee
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function createEmployee() {
+        return view('input');
+    }
+
+    /**
+     * Summary of importEmployeeView
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function importEmployeeView() {
+        return view('file');
+    }
+
+    /**
+     * Summary of showApiIndex
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function showApiIndex() {
+        return view('api/index');
+    }
+
+    /**
+     * Summary of editApiData
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function editApiData($id) {
+        $editData = $id;
+        return view('api/input', compact('editData'));
+    }
+
+    /**
+     * Summary of createApiData
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function createApiData() {
+        return view('api/input');
+    }
+
+    /**
+     * Summary of showApiMail
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function showApiMail() {
+        return view('api/mailform');
+    }
+
+    /**
+     * Summary of showEmployeeMail
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    
+    public function showEmployeeMail() {
+        return view('mailform');
     }
 }

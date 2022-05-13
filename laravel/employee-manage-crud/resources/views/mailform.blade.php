@@ -11,7 +11,7 @@
         < Home
       </a>
       <form method="POST" class="mailform" action="{{ route('sendmail') }}">
-        @sc
+        @csrf
         <label>Enter your email,we will sent you latest employee.</label>
         <input type="email" name="mail" placeholder="Your email">
         <button>Send</button>
